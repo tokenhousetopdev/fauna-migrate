@@ -11,7 +11,12 @@ const q = faunadb.query;
  */
 export async function seed (config: IConfig) {
 
-  const client = new faunadb.Client({ secret: config.secret });
+  const client = new faunadb.Client({
+    secret: config.secret,
+    domain: config.domain,
+    port: config.port,
+    scheme: config.scheme 
+  });
 
   if (config.seeds.length > 0) {
 

@@ -55,27 +55,11 @@ function usingConfig (file: IConfigFile, config: IConfig, argv: IArgv) {
  * if found, else false if missing.
  */
 function readFaunarc (cwd: string): false | { secret: string, domain: string } {
-
-  const faunarc = resolve(cwd, '.faunarc');
-
-  if (!existsSync(faunarc)) {
-    error(chalk`{red Missing {cyan .faunarc} file}\n`);
-    return false;
-  }
-
-  const contents = readFileSync(faunarc).toString();
-  const secret = contents.match(/\bFAUNA_KEY\s*=\s*([A-Za-z0-9_-]+)(?=\s?)/);
-
-  if (secret === null) {
-    error(chalk`\n{red Missing {cyan FAUNA_KEY} in {cyan .faunarc} file}\n`);
-    return false;
-  }
-
-  const region = contents.match(/\bFAUNA_REGION\s*=\s*(db\.(?:us|eu)\.fauna\.com)(?=\s?)/);
-
   return {
-    secret: secret[1],
-    domain: region === null ? 'db.fauna.com' : region[1]
+    secret: process.env.FAUNA_SECRET_KEY,
+    domain: process.env.FAUNA_DOMAIN,
+    scheme: process.env.FAUNA_SCHEME,
+    port: process.env.FAUNA_PORT
   };
 
 }

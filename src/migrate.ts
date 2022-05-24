@@ -163,8 +163,8 @@ export async function up (config: IConfig) {
   const client = new faunadb.Client({
     secret: config.secret,
     domain: config.domain,
-    port: 443,
-    scheme: 'https'
+    port: config.port,
+    scheme: config.scheme
   });
 
   if (config.force) {
@@ -209,8 +209,8 @@ export async function down (config: IConfig) {
   const client = new faunadb.Client({
     secret: config.secret,
     domain: config.domain,
-    port: 443,
-    scheme: 'https'
+    port: config.port,
+    scheme: config.scheme
   });
 
   if (config.run !== Run.Functions) {
